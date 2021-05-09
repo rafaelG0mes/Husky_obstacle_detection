@@ -30,8 +30,8 @@
   </include>
 
   <!-- Include Filters -->
-  <!-- <include file="$(find cloud_processing)/launch/cropbox_filter.launch"/>
-  <include file="$(find cloud_processing)/launch/passthrough_filter.launch"/> -->
+  <include file="$(find cloud_processing)/launch/cropbox_filter.launch"/>
+  <include file="$(find cloud_processing)/launch/passthrough_filter.launch"/>
 
   <!-- RViz -->
   <arg name="rviz" default="true"/>

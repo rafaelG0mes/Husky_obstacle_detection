@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <!-- CropBox Filter -->
+  <node args="CropBox" pkg="cloud_processing" type="pub_msg_script.py" name="cloud_processing_CropBox" output="screen"/>
+  <node pkg="nodelet" type="nodelet" name="pcl_manager_crop" args="manager" output="screen" />
+  <node pkg="nodelet" type="nodelet" name="cropbox"
+    args= "load pcl/CropBox pcl_manager_crop" output="screen">
+    <remap from="~input" to="/velodyne_points2" />
+    <remap from="~output" to="/cloud_processing/cropbox" />
+    <rosparam>
+      #negative = true: no points in the box
+      #negative = false: no points outside the box
+      negative: true
+      min_x: -1.5
+      max_x: 1.5
+      min_y: -1.5
+      max_y: 1.5
+      min_z: -3
+      max_z: 3
+    </rosparam>
+  </node>
+
+
+</launch>

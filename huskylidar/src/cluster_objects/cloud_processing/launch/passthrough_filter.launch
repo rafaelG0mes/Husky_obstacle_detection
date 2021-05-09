@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<launch>
+
+<!-- PassThrough filter -->
+<node args="PassThrough" pkg="cloud_processing" type="pub_msg_script.py" name="cloud_processing_PassThrough" output="screen"/>
+
+  <node pkg="nodelet" type="nodelet" name="pcl_manager_ransac" args="manager" output="screen" />
+  <node pkg="nodelet" type="nodelet" name="voxel_grid_ransac" args="load pcl/PassThrough pcl_manager_ransac" output="screen">
+  <remap from="~input" to="/cloud_processing/cropbox" />
+  <remap from="~output" to="/cloud_processing/passthrough" />
+  <rosparam>
+    filter_field_name: z
+    filter_limit_min: -0.81
+    filter_limit_max: 1.5
+  </rosparam>
+  </node>
+
+
+
+</launch>
+
