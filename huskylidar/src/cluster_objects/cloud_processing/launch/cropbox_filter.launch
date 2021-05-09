@@ -2,7 +2,6 @@
 <launch>
 
   <!-- CropBox Filter -->
-  <node args="CropBox" pkg="cloud_processing" type="pub_msg_script.py" name="cloud_processing_CropBox" output="screen"/>
   <node pkg="nodelet" type="nodelet" name="pcl_manager_crop" args="manager" output="screen" />
   <node pkg="nodelet" type="nodelet" name="cropbox"
     args= "load pcl/CropBox pcl_manager_crop" output="screen">
