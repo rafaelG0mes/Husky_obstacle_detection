@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" default="$(find velodyne_description)/world/world_obstacles.world"/>
+
+  <!-- Start gazebo and load the world -->
+  <include file="$(find velodyne_description)/launch/empty_world.launch" >
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+
+  <!-- Husky configurations -->
+  <arg name="laser_enabled" default="$(optenv HUSKY_LMS1XX_ENABLED 1)"/>
+  <arg name="realsense_enabled" default="$(optenv HUSKY_REALSENSE_ENABLED 0)"/>
+
+  <include file="$(find velodyne_description)/launch/spawn_husky.launch">
+    <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    <arg name="realsense_enabled" value="$(arg realsense_enabled)"/>
+  </include>
+
+  <!-- Include Filters -->
+  <!-- <include file="$(find cloud_processing)/launch/cropbox_filter.launch"/>
+  <include file="$(find cloud_processing)/launch/passthrough_filter.launch"/> -->
+
+  <!-- RViz -->
+  <arg name="rviz" default="true"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find velodyne_description)/rviz/husky_velodyne.rviz" />
+
+</launch>
